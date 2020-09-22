@@ -39,7 +39,7 @@ The 4 new features are as follows:
 **1.** Ability to provide sorted results on any field
 
 **2.** The response must provide a self link to the product and links for all available actions that can be performed on the product.
-**_For example_**, current implementation with above links would look like the following:
+**_For example_**, current implementation with such links would look like the following:
 
 Request - `http://localhost:8080/products/findById/1`
 ```json
