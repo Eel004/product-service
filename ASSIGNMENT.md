@@ -75,9 +75,9 @@ Request - `http://localhost:8080/products/findById/1`
 
 **3.** The API should offer paginated results when client sets a page size. The result should also contain pagination links. 
 
-**_For example_**: Get All products - Size=2, Page=0 and Sort By color in ascending order for the current implementation 
+**_For example_**: 
 
-Should contain the pagination links similar to ones the shown below
+Get All Products query with Size=2, Page=0 and Sort By color in ascending order should contain the pagination links similar to ones shown below
 
 The Request : `http://localhost:8080/products/findAll?size=2&page=0&sort=color`
  ```json
