@@ -77,7 +77,7 @@ Request - `http://localhost:8080/products/findById/1`
 
 **_For example_**: 
 
-Get All Products query with Size=2, Page=0 and Sort By color in ascending order should contain the pagination links similar to ones shown below
+Get All Products query with `size=2, page=0 and sort=color in ascending order` should contain the pagination links similar to ones shown below
 
 The Request : `http://localhost:8080/products/findAll?size=2&page=0&sort=color`
  ```json
