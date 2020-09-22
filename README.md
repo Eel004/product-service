@@ -4,6 +4,8 @@ Clone and open the project in your IDE.
 Run the main class [ProductServiceApplication](src/main/java/com/gfg/product/ProductServiceApplication.java) as spring boot appllication.
 On startup spring boot will read the [data.sql](src/main/resources/data.sql) file and execute the contents.
 
+The Product Service is now ready to receive API requests.
+
 ## REST API Documentation for Products
 **_Find All Products_** 
 
