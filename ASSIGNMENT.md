@@ -117,7 +117,7 @@ This completes the assignment. You should now have 2 branches with 'Task 1` and 
 
 > Don't hesitate to use any code style and code quality validation tools, we would love to see them!
 
-## How to submit your code
+## Submit YOUR code
 
 **_IMPORTANT_** : Don't apply any changes to this repository.
 
