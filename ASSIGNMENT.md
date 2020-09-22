@@ -40,6 +40,7 @@ The 4 new features are as follows:
 
 **2.** The response must provide a self link to the product and links for all available actions that can be performed on the product.
 **_For example_**, current implementation with above links would look like the following:
+
 Request - `http://localhost:8080/products/findById/1`
 ```json
 {
@@ -76,6 +77,7 @@ Request - `http://localhost:8080/products/findById/1`
 
 **_For example_**: Get All products - Size 2, PAge 0 and Sort By color in ascending order for the current implementation 
 Should contain the pagination links similar to ones the shown below
+
 The Request : `http://localhost:8080/products/findAll?size=2&page=0&sort=color`
  ```json
 "_links": {
@@ -104,6 +106,7 @@ The Request : `http://localhost:8080/products/findAll?size=2&page=0&sort=color`
 **4.** Search API for products.
 
 The `product-service` should provide an API to Search a product using any of its fields, can also be more than 1 field.
+
 For example -> `Color is blue` and `brand is GAS`
 The Search API result must containing sorting, pagination and other links mentioned above in #1, #2 and #3.
 In other words, the Search API result should be exactly like find all case, only difference being that the products in the result will be filtered based on the search criteria.
