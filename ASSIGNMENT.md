@@ -109,6 +109,7 @@ The Request : `http://localhost:8080/products/findAll?size=2&page=0&sort=color`
 The `product-service` should provide an API to Search a product using any of its fields, can also be more than 1 field.
 
 For example -> `Color is blue` and `brand is GAS`
+
 The Search API result must containing sorting, pagination and other links mentioned above in #1, #2 and #3.
 In other words, the Search API result should be exactly like find all case, only difference being that the products in the result will be filtered based on the search criteria.
 
