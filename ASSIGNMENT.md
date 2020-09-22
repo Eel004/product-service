@@ -31,8 +31,11 @@ The current code has `violations` in the following areas
 ### Task 2 - New Features - Second Version
 > Create a new Branch `product_service-task-2` from the `product_service-task-1` branch
 
-While the first version is now in production, some clients have requested for 4 additional features. 
-The first version should still be available for other clients along with the new version.
+While the **_first_** version is now in production, some clients have requested for 4 additional features. 
+The **_first_** version should still be available for other clients along with the new version.
+
+The 4 new features are as follows:
+
 **1.** Ability to provide sorted results on any field
 
 **2.** The response must provide a self link to the product and links for all available actions that can be performed on the product.
