@@ -2,9 +2,9 @@
 The Product Service is a REST API that provides endpoints to perform CRUD operations for products.
 The [README.md](README.md) provides instructions to run the application in its current state.
 This assignment has the following 3 goals:
-1. Refactor - Improve current Code
-2. Production Ready - Make the current code production ready
-3. New Functionality - Add features to the product service
+1. **_Refactor_** - Improve current Code
+2. **_Production Ready_** - Make the current code production ready
+3. **_New Functionality_** - Add features to the product service
 
 To achieve above goals the following 2 tasks must be completed.
 
@@ -109,4 +109,4 @@ This completes the assignment. You should now have 2 branches with 'Task 1` and 
 
 > Don't hesitate to use any code style and code quality validation tools, we would love to see them!
 
-`**_Happy Coding !_**`
+**_`Happy Coding !`_**

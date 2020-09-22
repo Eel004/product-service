@@ -11,7 +11,7 @@ Send a `POST` Request to `http://localhost:8080/products/findAll`
 **_Find a Product with Id 1_**
 Send a `POST` Request to `http://localhost:8080/products/findById/1`
 
-**_Add New Product -**
+**_Add New Product_**
 Send a `POST` request to `http://localhost:8080/products/new`
 Sample Request Body
 ```json
@@ -47,6 +47,6 @@ Response
 } 
 ```
 
-**_Delete a Product with Id 1 -**_
+**_Delete a Product with Id 1_**
 Send a `POST` request to `http://localhost:8080/products/deleteById/1`
 If delete is successful `true` is returned in response, if failed then `false` is returned
