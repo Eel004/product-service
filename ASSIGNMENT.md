@@ -117,4 +117,23 @@ This completes the assignment. You should now have 2 branches with 'Task 1` and 
 
 > Don't hesitate to use any code style and code quality validation tools, we would love to see them!
 
+## How to submit your code
+
+**_IMPORTANT_** : Don't apply any changes to this repository.
+
+1. Clone this repository into you own private repository on github.
+
+2. Create new branches (for `Task 1` and `Task 2` as indicated above) with your changes (_as many `commits` as you wish_). 
+
+Please follow this naming convention for the branch name:
+
+`{first name}_{last name}_task_{number}`
+
+Give repository access to the person/s from our organization that you should have been indicated by now. 
+Ask the Hiring Manager if you did not get them yet. (_Currently these would be `@javighrock` and `@fdiazarce`_)
+
+> Please grant "Admin" access to these users since they might need to grant access to some other colleagues in turn.
+
+Notify the **_Hiring Manager_** when you are done and provide a `link` to your repository.
+
 **_`Happy Coding !`_**
