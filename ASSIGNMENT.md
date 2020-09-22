@@ -9,7 +9,7 @@ This assignment has the following 3 goals:
 To achieve above goals the following 2 tasks must be completed.
 
 ### Task 1 - Refactor and Production Ready - First Version
-> Create a new Branch `product_service-task-1` from the `current` branch
+> Create a new Branch `product_service-task-1` from the `your` branch
 
 The current code has `violations` in the following areas
 - _REST Usage_
@@ -20,7 +20,7 @@ The current code has `violations` in the following areas
 - _Javadocs_
 - _Production Readiness (profiles, database setup and scripts execution, containerization, usage docs)._
 
-> This is NOT an exhaustive list, feel free to add your own here.
+> This is NOT an exhaustive list, there could be more you can identify during your analysis.
 
 #### Your Task:
 1. List all the **_violations_** you have noticed in [VIOLATIONS.md](VIOLATIONS.md) file.
