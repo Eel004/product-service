@@ -1,0 +1,112 @@
+## GOALS
+The Product Service is a REST API that provides endpoints to perform CRUD operations for products.
+The [README.md](README.md) provides instructions to run the application in its current state.
+This assignment has the following 3 goals:
+1. Refactor - Improve current Code
+2. Production Ready - Make the current code production ready
+3. New Functionality - Add features to the product service
+
+To achieve above goals the following 2 tasks must be completed.
+
+### Task 1 - Refactor and Production Ready - First Version
+> Create a new Branch `product_service-task-1` from the `current` branch
+
+The current code has `violations` in the following areas
+- _REST Usage_
+- _Spring API usage_
+- _Java Coding practices_
+- _API Documentation_
+- _Test Coverage_
+- _Javadocs_
+- _Production Readiness (profiles, database setup and scripts execution, containerization, usage docs)._
+
+> This is NOT an exhaustive list, feel free to add your own here.
+
+#### Your Task:
+1. List all the **_violations_** you have noticed in [VIOLATIONS.md](VIOLATIONS.md) file.
+2. **_Refactor_** the current code to fix ALL the violations you have listed in [VIOLATIONS.md](VIOLATIONS.md)
+3. Make the code **_Production Ready_**.
+4. This will be the **_first version_** of product-service. 
+
+### Task 2 - New Features - Second Version
+> Create a new Branch `product_service-task-2` from the `product_service-task-1` branch
+
+While the first version is now in production, some clients have requested for 4 additional features. 
+The first version should still be available for other clients along with the new version.
+**1.** Ability to provide sorted results on any field
+
+**2.** The response must provide a self link to the product and links for all available actions that can be performed on the product.
+**_For example_**, current implementation with above links would look like the following:
+Request - `http://localhost:8080/products/findById/1`
+```json
+{
+    "id": 1,
+    "productId": "GAS1234567",
+    "title": "Jeans",
+    "description": "Slim fit jeans",
+    "brand": "GAS",
+    "price": 10000,
+    "color": "Blue",
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/products/findById/1",
+            "type": "POST"
+        },
+        "create": {
+            "href": "http://localhost:8080/products/new",
+            "type": "POST"
+        },
+        "update": {
+            "href": "http://localhost:8080/products/updateById/1",
+            "type": "POST"
+        },
+        "delete": {
+            "href": "http://localhost:8080/products/deleteById/1",
+            "type": "POST"
+        }
+    }
+}    
+```
+> The links Url should vary depending upon the refactorings done in Task 1. The above links are only for representational purposes.
+
+**3.** The API should offer paginated results when client sets a page size. The result should also contain pagination links. 
+
+**_For example_**: Get All products - Size 2, PAge 0 and Sort By color in ascending order for the current implementation 
+Should contain the pagination links similar to ones the shown below
+The Request : `http://localhost:8080/products/findAll?size=2&page=0&sort=color`
+ ```json
+"_links": {
+        "first": {
+            "href": "http://localhost:8080/products/findAll?page=0&size=2&sort=color,asc"
+        },
+        "self": {
+            "href": "http://localhost:8080/products/findAll?page=0&size=2&sort=color,asc"
+        },
+        "next": {
+            "href": "http://localhost:8080/products/findAll?page=1&size=2&sort=color,asc"
+        },
+        "last": {
+            "href": "http://localhost:8080/products/findAll?page=1&size=2&sort=color,asc"
+        }
+ },
+ "page": {
+    "size": 2,
+    "totalElements": 3,
+    "totalPages": 2,
+    "number": 0
+ }
+```
+> The links Url should vary depending upon the refactorings done in Task 1. The above links are only for representational purposes.
+
+**4.** Search API for products.
+
+The `product-service` should provide an API to Search a product using any of its fields, can also be more than 1 field.
+For example -> `Color is blue` and `brand is GAS`
+The Search API result must containing sorting, pagination and other links mentioned above in #1, #2 and #3.
+In other words, the Search API result should be exactly like find all case, only difference being that the products in the result will be filtered based on the search criteria.
+
+This completes the assignment. You should now have 2 branches with 'Task 1` and `Task 2` respectively, ready to Submit.
+
+> Don't hesitate to use any code style and code quality validation tools, we would love to see them!
+
+`**_Happy Coding !_**`

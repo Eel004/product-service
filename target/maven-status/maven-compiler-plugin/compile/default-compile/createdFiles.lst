@@ -1,0 +1,4 @@
+com/gfg/product/web/ProductController.class
+com/gfg/product/ProductServiceApplication.class
+com/gfg/product/model/Product.class
+com/gfg/product/repository/ProductRepository.class
