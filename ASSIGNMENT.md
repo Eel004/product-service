@@ -130,7 +130,7 @@ Please follow this naming convention for the branch name:
 `{first name}_{last name}_task_{number}`
 
 Give repository access to the person/s from our organization that you should have been indicated by now. 
-Ask the Hiring Manager if you did not get them yet. (_Currently these would be `@javighrock` and `@fdiazarce`_)
+Ask the Hiring Manager if you did not get them yet. (_Currently these would be `@nikhilvasaikar`, `@wolframite` and `@fdiazarce`_)
 
 > Please grant "Admin" access to these users since they might need to grant access to some other colleagues in turn.
 
