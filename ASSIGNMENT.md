@@ -6,6 +6,8 @@ This assignment has the following 3 goals:
 2. **_Production Ready_** - Make the current code production ready
 3. **_New Functionality_** - Add features to the product service
 
+**_IMPORTANT_** : Don't apply any changes to this repository. Clone this repository into **_your own private repository_** on github.
+
 To achieve above goals the following 2 tasks must be completed.
 
 ### Task 1 - Refactor and Production Ready - First Version
@@ -23,6 +25,7 @@ The current code has `violations` in the following areas
 > This is NOT an exhaustive list, there could be more you can identify during your analysis.
 
 #### Your Task:
+
 1. List all the **_violations_** you have noticed in [VIOLATIONS.md](VIOLATIONS.md) file.
 2. **_Refactor_** the current code to fix ALL the violations you have listed in [VIOLATIONS.md](VIOLATIONS.md)
 3. Make the code **_Production Ready_**.
@@ -113,21 +116,13 @@ For example -> `Color is blue` and `brand is GAS`
 The Search API result must containing sorting, pagination and other links mentioned above in #1, #2 and #3.
 In other words, the Search API result should be exactly like find all case, only difference being that the products in the result will be filtered based on the search criteria.
 
-This completes the assignment. You should now have 2 branches with 'Task 1` and `Task 2` respectively, ready to Submit.
+This completes the assignment. You should now have 2 branches `product_service-task-1` and `product_service-task-2` for `Task 1` and `Task 2` respectively, ready to Submit.
 
 > Don't hesitate to use any code style and code quality validation tools, we would love to see them!
 
 ## Submit YOUR code
 
 **_IMPORTANT_** : Don't apply any changes to this repository.
-
-1. Clone this repository into you own private repository on github.
-
-2. Create new branches (for `Task 1` and `Task 2` as indicated above) with your changes (_as many `commits` as you wish_). 
-
-Please follow this naming convention for the branch name:
-
-`{first name}_{last name}_task_{number}`
 
 Give repository access to the person/s from our organization that you should have been indicated by now. 
 Ask the Hiring Manager if you did not get them yet. (_Currently these would be `@nikhilvasaikar`, `@wolframite` and `@fdiazarce`_)
