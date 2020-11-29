@@ -1,15 +1,22 @@
 package com.gfg.product.web;
 
+import com.gfg.product.assembler.ProductRepresentationModelAssembler;
+import com.gfg.product.dsl.builder.ProductPredicateBuilder;
 import com.gfg.product.exception.BadRequestException;
-import com.gfg.product.exception.ProductNotFoundException;
+import com.gfg.product.hateos.ProductModel;
 import com.gfg.product.model.Product;
 import com.gfg.product.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/products")
@@ -17,8 +24,16 @@ public class ProductController {
 
     private ProductRepository productRepository;
 
-    public ProductController(ProductRepository productRepository) {
+    private final ProductRepresentationModelAssembler assembler;
+
+    private final PagedResourcesAssembler<Product> pagedResourcesAssembler;
+
+    public ProductController(ProductRepository productRepository,
+                             ProductRepresentationModelAssembler assembler,
+                             PagedResourcesAssembler<Product> pagedResourcesAssembler) {
         this.productRepository = productRepository;
+        this.assembler = assembler;
+        this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
     /**
@@ -28,14 +43,19 @@ public class ProductController {
      * @throws Exception
      */
     @GetMapping("/findAll")
-    public ResponseEntity<List<Product>> findAll() throws Exception {
-        ResponseEntity<List<Product>> response;
-        List<Product> productList = null;
-        productList = productRepository.findAll();
-        if (productList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<PagedModel<ProductModel>> findAll(@RequestParam(value = "search", required = false) String search,
+                                                            Pageable pageable) throws Exception {
+        ProductPredicateBuilder predicateBuilder = new ProductPredicateBuilder();
+        if (search != null) {
+            Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+            Matcher matcher = pattern.matcher(search + ",");
+            while (matcher.find()) {
+                predicateBuilder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+            }
         }
-        return new ResponseEntity<>(productList, HttpStatus.OK);
+        Page<Product> productPageable = productRepository.findAll(predicateBuilder.build(), pageable);
+        PagedModel<ProductModel> pagedModel = pagedResourcesAssembler.toModel(productPageable, assembler);
+        return new ResponseEntity<>(pagedModel, HttpStatus.OK);
     }
 
 
@@ -46,10 +66,11 @@ public class ProductController {
      * @throws Exception
      */
     @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id) throws Exception {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(String.format("Could not found product: %s", id)));
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<ProductModel> findById(@PathVariable Long id) throws Exception {
+        return productRepository.findById(id)
+                .map(assembler::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
 
     }
 

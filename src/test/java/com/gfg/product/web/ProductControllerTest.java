@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,11 +33,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ProductServiceApplication.class)
 public class ProductControllerTest {
 
-    private static final String PRODUCT_ID = "GAS12345699";
+    private static final String PRODUCT_ID_1 = "GAS12345699";
+    private static final String PRODUCT_ID_2 = "GAS1234569_22222";
     private static final String TITLE = "Jeans";
     private static final String DESCRIPTION = "Slim fit jeans";
     private static final String BRAND = "GAS";
-    private static final BigDecimal PRICE = new BigDecimal("100.0");
+    private static final BigDecimal PRICE_1 = new BigDecimal("90.0");
+    private static final BigDecimal PRICE_2 = new BigDecimal("100.0");
     private static final String COLOR = "Blue";
 
     @Autowired
@@ -49,14 +52,24 @@ public class ProductControllerTest {
 
     private Product testData;
 
-    private Product createTestEntity() {
-        return Product.builder()
-                .productId(PRODUCT_ID)
+    private Product testData2;
+
+    private void createTestEntity() {
+        testData = Product.builder()
+                .productId(PRODUCT_ID_1)
                 .title(TITLE)
                 .description(DESCRIPTION)
                 .brand(BRAND)
                 .color(COLOR)
-                .price(PRICE)
+                .price(PRICE_1)
+                .build();
+        testData2 = Product.builder()
+                .productId(PRODUCT_ID_2)
+                .title(TITLE)
+                .description(DESCRIPTION)
+                .brand(BRAND)
+                .color(COLOR)
+                .price(PRICE_2)
                 .build();
     }
 
@@ -65,7 +78,7 @@ public class ProductControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         productRepository.deleteAll();
-        testData = createTestEntity();
+        createTestEntity();
     }
 
     @Test
@@ -73,13 +86,57 @@ public class ProductControllerTest {
         Product save = productRepository.save(testData);
         mockMvc.perform(get("/products/findAll"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].productId").value(hasItem(PRODUCT_ID)))
-                .andExpect(jsonPath("$.[*].title").value(hasItem(TITLE)))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DESCRIPTION)))
-                .andExpect(jsonPath("$.[*].brand").value(hasItem(BRAND)))
-                .andExpect(jsonPath("$.[*].color").value(hasItem(COLOR)))
-                .andExpect(jsonPath("$.[*].price").value(hasItem(PRICE.doubleValue())));
+                .andExpect(content().contentType("application/hal+json"))
+                .andExpect(jsonPath("$._embedded.products.[*].productId").value(hasItem(PRODUCT_ID_1)))
+                .andExpect(jsonPath("$._embedded.products.[*].title").value(hasItem(TITLE)))
+                .andExpect(jsonPath("$._embedded.products.[*].description").value(hasItem(DESCRIPTION)))
+                .andExpect(jsonPath("$._embedded.products.[*].brand").value(hasItem(BRAND)))
+                .andExpect(jsonPath("$._embedded.products.[*].color").value(hasItem(COLOR)))
+                .andExpect(jsonPath("$._embedded.products.[*].price").value(hasItem(PRICE_1.doubleValue())));
+    }
+
+    @Test
+    public void findAllProduct_withSearchPredicate_shouldReturnProductAndResponseOK() throws Exception {
+        Product save = productRepository.save(testData);
+        mockMvc.perform(get("/products/findAll?search=product:", PRODUCT_ID_1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/hal+json"))
+                .andExpect(jsonPath("$._embedded.products.[*].productId").value(hasItem(PRODUCT_ID_1)))
+                .andExpect(jsonPath("$._embedded.products.[*].title").value(hasItem(TITLE)))
+                .andExpect(jsonPath("$._embedded.products.[*].description").value(hasItem(DESCRIPTION)))
+                .andExpect(jsonPath("$._embedded.products.[*].brand").value(hasItem(BRAND)))
+                .andExpect(jsonPath("$._embedded.products.[*].color").value(hasItem(COLOR)))
+                .andExpect(jsonPath("$._embedded.products.[*].price").value(hasItem(PRICE_1.doubleValue())));
+    }
+
+    @Test
+    public void findAllProduct_withPriceGreaterOrEqualThan_shouldReturnCorrectProductAndResponseOK() throws Exception {
+        // save 2 products to verify data correctly
+        Product save = productRepository.save(testData);
+        Product save2 = productRepository.save(testData2);
+        mockMvc.perform(get("/products/findAll?search=price>=", PRICE_2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/hal+json"))
+                .andExpect(jsonPath("$._embedded.products.[*].productId").value(hasItem(PRODUCT_ID_2)))
+                .andExpect(jsonPath("$._embedded.products.[*].title").value(hasItem(TITLE)))
+                .andExpect(jsonPath("$._embedded.products.[*].description").value(hasItem(DESCRIPTION)))
+                .andExpect(jsonPath("$._embedded.products.[*].brand").value(hasItem(BRAND)))
+                .andExpect(jsonPath("$._embedded.products.[*].color").value(hasItem(COLOR)))
+                .andExpect(jsonPath("$._embedded.products.[*].price").value(hasItem(PRICE_2.doubleValue())));
+    }
+
+    @Test
+    public void findAllProduct_withSortDescByPrice_shouldReturnCorrectProductAndResponseOK() throws Exception {
+        // save 2 products to verify data correctly
+        // price 1 = 90
+        // price 2 = 100
+        // => should display in order: [testData2 , testData]
+        Product save = productRepository.save(testData);
+        Product save2 = productRepository.save(testData2);
+        mockMvc.perform(get("/products/findAll?sort=price,desc"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/hal+json"))
+                .andExpect(jsonPath("$._embedded.products.[0].productId").value(PRODUCT_ID_2));
     }
 
     @Test
@@ -87,13 +144,13 @@ public class ProductControllerTest {
         Product saved = productRepository.save(testData);
         mockMvc.perform(get("/products/findById/{id}", saved.getId()))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
+                .andExpect(content().contentType("application/hal+json"))
+                .andExpect(jsonPath("$.productId").value(PRODUCT_ID_1))
                 .andExpect(jsonPath("$.title").value(TITLE))
                 .andExpect(jsonPath("$.description").value(DESCRIPTION))
                 .andExpect(jsonPath("$.brand").value(BRAND))
                 .andExpect(jsonPath("$.color").value(COLOR))
-                .andExpect(jsonPath("$.price").value(PRICE.doubleValue()));
+                .andExpect(jsonPath("$.price").value(PRICE_1.doubleValue()));
     }
 
     @Test
